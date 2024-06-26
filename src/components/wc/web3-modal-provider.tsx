@@ -30,6 +30,7 @@ const wagmiConfig = defaultWagmiConfig({
 
 // 3. Create modal
 createWeb3Modal({
+  themeMode: 'light',
   wagmiConfig,
   projectId,
   enableAnalytics: false, // Optional - defaults to your Cloud configuration
@@ -38,8 +39,10 @@ createWeb3Modal({
 
 export const Web3ModalProvider: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <WagmiProvider config={wagmiConfig}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <WagmiProvider config={wagmiConfig} initialState={undefined}>
+      <QueryClientProvider client={queryClient}>
+        {children}
+      </QueryClientProvider>
     </WagmiProvider>
   )
 }
