@@ -2,6 +2,7 @@ import React from 'react'
 import { Inter } from 'next/font/google'
 import { cn } from '@/lib/utils'
 import type { Metadata } from 'next'
+import { Web3ModalProvider } from '@/components/wc/web3-modal-provider'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -18,7 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, 'min-h-screen h-full bg-gray-100')}>{children}</body>
+      <body className={cn(inter.className, 'min-h-screen h-full bg-gray-100')}>
+        <Web3ModalProvider>{children}</Web3ModalProvider>
+        {/*{children}*/}
+      </body>
     </html>
   )
 }
