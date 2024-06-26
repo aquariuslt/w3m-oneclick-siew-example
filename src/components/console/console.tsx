@@ -14,7 +14,7 @@ export const Console: React.FC<ConsoleProps> = ({ data }) => {
       <CardContent className="space-y-4">
         <div>
           <h3 className="text-lg font-medium"></h3>
-          <div className="bg-muted rounded-md p-4 text-sm text-muted-foreground">{JSON.stringify(data, null, 2)}</div>
+          <pre className="bg-muted rounded-md p-4 text-sm text-muted-foreground">{data}</pre>
         </div>
       </CardContent>
     </Card>
