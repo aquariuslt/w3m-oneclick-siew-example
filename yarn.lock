@@ -1596,7 +1596,7 @@
     "@web3modal/wallet" "5.0.3"
     lit "3.1.0"
 
-"@web3modal/siwe@5.0.3":
+"@web3modal/siwe@5.0.3", "@web3modal/siwe@^5.0.3":
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/@web3modal/siwe/-/siwe-5.0.3.tgz#7ff6e8b0ddef6ba9a39e309ed0e9668f0cac7c8e"
   integrity sha512-aoS++Jx0hAUnW/Wyvp6GU/bFNbSY4kReZSCIGPbGiKboybAvvKyb04j7HAYju9QtogZrIUy4crZslV5DfVE3Rw==

@@ -9,19 +9,18 @@ import { ConnectButton } from '@/components/wc/connect-button'
 const Home: NextPage = () => {
   const [debugData, setDebugData] = useState<object>({})
 
-  const accountState = useAccount()
+  const { address, status, chainId } = useAccount()
 
   useEffect(() => {
     setDebugData(v => ({
       ...v,
       account: {
-        address: accountState.address,
-        addresses: accountState.addresses,
-        status: accountState.status,
-        chainId: accountState.chainId,
+        address,
+        status,
+        chainId,
       },
     }))
-  }, [accountState])
+  }, [address, status, chainId])
 
   return (
     <div className="container p-4 h-screen flex flex-col">
