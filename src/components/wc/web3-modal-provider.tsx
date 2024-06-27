@@ -1,10 +1,11 @@
 'use client'
 
 import React, { type PropsWithChildren } from 'react'
-import { fetchNonce, fetchSession, removeSession, verifyMessageAndCreateSession } from '@/apis/auth'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { fetchNonce, fetchSession, removeSession, setAuthToken, verifyMessageAndCreateSession } from '@/apis/auth'
+import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query'
 import {
   type SIWECreateMessageArgs,
+  type SIWESession,
   type SIWEVerifyMessageArgs,
   createSIWEConfig,
   formatMessage,
@@ -37,7 +38,6 @@ const wagmiConfig = defaultWagmiConfig({
 
 // 2.5 Create SIWE config
 async function getNonce(address?: string) {
-  //...
   const nonce = await fetchNonce(address)
   console.log(`[debug]: 0. call get nonce with params: ${address}, result: ${nonce}`)
   return nonce
@@ -55,7 +55,6 @@ async function getMessageParams() {
 
 /* Use your SIWE server to verify if the message and the signature are valid */
 async function verifyMessage({ message, signature }: SIWEVerifyMessageArgs) {
-  //...
   console.log(`[debug]: 3. call verify message with params:`, message, signature)
   const result = await verifyMessageAndCreateSession({ message, signature })
   // TODO: read and set token for compose in common request
@@ -66,15 +65,19 @@ async function verifyMessage({ message, signature }: SIWEVerifyMessageArgs) {
 
 /* Function that returns the user's session - this should come from your SIWE backend */
 async function getSession() {
-  //...
   console.log(`[debug]: 4. call get session`)
-  const session = await fetchSession()
-  console.log(`[debug]: 4. call get session with result:`, session)
+  let session = null
+  try {
+    session = (await fetchSession()) as SIWESession
+    console.log(`[debug]: 4. call get session with result:`, session)
+  } catch (error) {
+    console.log(`[debug]: 4. call get session with error:`, error)
+  }
+
   return session
 }
 
 async function signOut() {
-  //...
   console.log(`[debug]: other. call sign out`)
   await removeSession()
   return true
@@ -88,6 +91,18 @@ const siweConfig = createSIWEConfig({
   getSession,
   verifyMessage,
   signOut,
+  onSignIn: session => {
+    void queryClient.refetchQueries({
+      queryKey: ['session'],
+    })
+  },
+  onSignOut: () => {
+    console.log(`[debug]: try invalidate session tags`)
+    setAuthToken('')
+    void queryClient.invalidateQueries({
+      queryKey: ['session'],
+    })
+  },
 })
 
 // 3. Create modal

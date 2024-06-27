@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import { useAccount } from 'wagmi'
+import { useSession } from '@/hooks/use-session'
 import { Console } from '@/components/console/console'
 import { ConnectButton } from '@/components/wc/connect-button'
 
@@ -10,6 +11,7 @@ const Home: NextPage = () => {
   const [debugData, setDebugData] = useState<object>({})
 
   const { address, status, chainId } = useAccount()
+  const { data: session, status: fetchSessionStatus, error } = useSession()
 
   useEffect(() => {
     setDebugData(v => ({
@@ -21,6 +23,17 @@ const Home: NextPage = () => {
       },
     }))
   }, [address, status, chainId])
+
+  useEffect(() => {
+    setDebugData(v => ({
+      ...v,
+      session: {
+        status: fetchSessionStatus,
+        data: session,
+        error,
+      },
+    }))
+  }, [fetchSessionStatus, session, error])
 
   return (
     <div className="container p-4 h-screen flex flex-col">

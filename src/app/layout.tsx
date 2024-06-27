@@ -21,7 +21,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, 'min-h-screen h-full bg-gray-100')}>
         <Web3ModalProvider>{children}</Web3ModalProvider>
-        {/*{children}*/}
       </body>
     </html>
   )

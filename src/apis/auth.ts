@@ -7,11 +7,10 @@ import {
 
 const BASE_URL = 'http://localhost:3001/api/v1/auth'
 
-export const fetchSession = async () => {
+export const fetchSession = async (): Promise<SIWESession | null> => {
   const endpoint = BASE_URL + '/siwe/session'
   const token = getAuthToken()
 
-  let res = null
   try {
     const fetchSessionRes = await fetch(endpoint, {
       headers: {
@@ -19,11 +18,13 @@ export const fetchSession = async () => {
       },
     })
     if (fetchSessionRes.ok) {
-      res = await fetchSessionRes.json()
+      return (await fetchSessionRes.json()) as SIWESession
     }
-  } catch (error) {}
-
-  return res
+  } catch (error) {
+    const message = (error as unknown as Error)?.message ?? 'Failed to fetch session'
+    throw new Error(message)
+  }
+  return null
 }
 
 export const fetchNonce = async (address?: string) => {
@@ -71,10 +72,10 @@ export const removeSession = async () => {
   })
 }
 
-const setAuthToken = (token: string) => {
+export const setAuthToken = (token: string) => {
   localStorage.setItem('siwe-token', token)
 }
 
-const getAuthToken = () => {
+export const getAuthToken = () => {
   return localStorage.getItem('siwe-token')
 }
