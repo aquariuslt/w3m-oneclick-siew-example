@@ -6,6 +6,7 @@ import { useAccount } from 'wagmi'
 import { useSession } from '@/hooks/use-session'
 import { Console } from '@/components/console/console'
 import { ConnectButton } from '@/components/wc/connect-button'
+import { SiweGuard } from '@/components/wc/siwe-guard'
 
 const Home: NextPage = () => {
   const [debugData, setDebugData] = useState<object>({})
@@ -36,17 +37,19 @@ const Home: NextPage = () => {
   }, [fetchSessionStatus, session, error])
 
   return (
-    <div className="container p-4 h-screen flex flex-col">
-      <section className="w-full flex-row">
-        <div className="flex flex-row-reverse">
-          <ConnectButton />
-        </div>
-      </section>
+    <SiweGuard>
+      <div className="container p-4 h-screen flex flex-col">
+        <section className="w-full flex-row">
+          <div className="flex flex-row-reverse">
+            <ConnectButton />
+          </div>
+        </section>
 
-      <section className="w-full mt-auto">
-        <Console data={JSON.stringify(debugData, null, 2)} />
-      </section>
-    </div>
+        <section className="w-full mt-auto">
+          <Console data={JSON.stringify(debugData, null, 2)} />
+        </section>
+      </div>
+    </SiweGuard>
   )
 }
 

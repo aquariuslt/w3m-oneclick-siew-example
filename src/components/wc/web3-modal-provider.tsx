@@ -57,9 +57,7 @@ async function getMessageParams() {
 async function verifyMessage({ message, signature }: SIWEVerifyMessageArgs) {
   console.log(`[debug]: 3. call verify message with params:`, message, signature)
   const result = await verifyMessageAndCreateSession({ message, signature })
-  // TODO: read and set token for compose in common request
   console.log(`[debug]: 3. call verify message with result:`, result)
-
   return true
 }
 
