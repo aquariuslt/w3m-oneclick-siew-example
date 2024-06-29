@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SIWE One-Click Auth Example
+
+This is a monorepo example of a SIWE application with one-click authentication refer to
+[Web3Modal - React SIWE One-Click Auth](https://docs.walletconnect.com/appkit/react/core/siwe).
+
+Client: create from `create-next-app` with tailwind css, wagmi, @web3modal
+Server: create from `@nestjs/cli` with jwt sign flow
+
+
+
+> It's non-production ready and only for educational purposes.
+> Use optimism-sepolia as dev network
+
+
+
 
 ## Getting Started
 
-First, run the development server:
+### Install dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd /path/to/project
+yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Start the client
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> Pre-requisite: Make sure you have your own WALLETCONNECT_PROJECT_ID
+> `cp .env.example .env` and update the `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+cd apps/client
+yarn dev
+```
 
-## Learn More
+client will run at http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+### Start the server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> Pre-requisite: 
+> `cp .env.example .env` and update the `JWT_SECRET` (e.g. 123456)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+```bash
+cd apps/server
+yarn start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+client will run at http://localhost:3001
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+
+### Test Flow
+
+open browser at http://localhost:3000 
+
+> You can check console log to see how siwe related functions are called

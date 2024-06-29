@@ -29,9 +29,6 @@ export const SiweGuard: React.FC<{ children: React.ReactNode }> = ({ children })
           void openWeb3Modal()
         }
       }
-      if (session && isWeb3ModalOpen) {
-        void closeWeb3Modal()
-      }
     }, 500)
 
     return () => clearTimeout(timer)
