@@ -46,7 +46,7 @@ cd apps/server
 yarn start
 ```
 
-client will run at http://localhost:3001
+server will run at http://localhost:3001
 
 
 
