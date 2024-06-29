@@ -39,12 +39,12 @@ const wagmiConfig = defaultWagmiConfig({
 // 2.5 Create SIWE config
 async function getNonce(address?: string) {
   const nonce = await fetchNonce(address)
-  console.log(`[debug]: 0. call get nonce with params: ${address}, result: ${nonce}`)
+  console.log(`[debug]: call get nonce with params: ${address}, result: ${nonce}`)
   return nonce
 }
 
 async function getMessageParams() {
-  console.log(`[debug]: 1. call get message params`)
+  console.log(`[debug]: call get message params`)
   return {
     domain: window.location.host,
     uri: window.location.origin,
@@ -55,21 +55,21 @@ async function getMessageParams() {
 
 /* Use your SIWE server to verify if the message and the signature are valid */
 async function verifyMessage({ message, signature }: SIWEVerifyMessageArgs) {
-  console.log(`[debug]: 3. call verify message with params:`, message, signature)
+  console.log(`[debug]: call verify message with params:`, message, signature)
   const result = await verifyMessageAndCreateSession({ message, signature })
-  console.log(`[debug]: 3. call verify message with result:`, result)
+  console.log(`[debug]: call verify message with result:`, result)
   return true
 }
 
 /* Function that returns the user's session - this should come from your SIWE backend */
 async function getSession() {
-  console.log(`[debug]: 4. call get session`)
+  console.log(`[debug]: call get session`)
   let session = null
   try {
     session = (await fetchSession()) as SIWESession
-    console.log(`[debug]: 4. call get session with result:`, session)
+    console.log(`[debug]: call get session with result:`, session)
   } catch (error) {
-    console.log(`[debug]: 4. call get session with error:`, error)
+    console.log(`[debug]: call get session with error:`, error)
   }
 
   return session
